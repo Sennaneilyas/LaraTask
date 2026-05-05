@@ -15,7 +15,7 @@ class TaskController extends Controller
     {
         $this->authorizeProject($project);
         $tasks = $project->tasks()->latest()->get();
-        return view('tasks.index', compact('project', 'tasks'));
+        return view('projects.tasks.index', compact('project', 'tasks'));
     }
 
     /**
@@ -24,7 +24,7 @@ class TaskController extends Controller
     public function create(Project $project)
     {
         $this->authorizeProject($project);
-        return view('tasks.create', compact('project'));
+        return view('projects.tasks.create', compact('project'));
     }
 
     /**
@@ -36,7 +36,8 @@ class TaskController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:255',
+            'is_completed' => 'nullable|boolean',
         ]);
 
         $project->tasks()->create($validated);
@@ -48,50 +49,49 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(Project $project, Task $task)
     {
-        $this->authorizeTask($task);
-        return view('tasks.show', compact('task'));
+        $this->authorizeProject($task->project);
+        return view('projects.tasks.show', compact('project', 'task'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Task $task)
+    public function edit(Project $project, Task $task)
     {
-        $this->authorizeTask($task);
-        return view('tasks.edit', compact('task'));
+        $this->authorizeProject($task->project);
+        return view('projects.tasks.edit', compact('project', 'task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, Project $project, Task $task)
     {
-        $this->authorizeTask($task);
+        $this->authorizeProject($task->project);
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'is_completed' => 'boolean',
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'is_completed' => 'sometimes|boolean',
         ]);
 
         $task->update($validated);
 
-        return redirect()->route('projects.show', $task->project_id)
+        return redirect()->route('projects.tasks.show', compact('project', 'task'))
             ->with('success', 'Task updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(Project $project, Task $task)
     {
-        $this->authorizeTask($task);
-        $projectId = $task->project_id;
+        $this->authorizeProject($task->project);
         $task->delete();
 
-        return redirect()->route('projects.show', $projectId)
+        return redirect()->route('projects.show', $project)
             ->with('success', 'Task deleted successfully!');
     }
 
@@ -101,16 +101,6 @@ class TaskController extends Controller
     protected function authorizeProject(Project $project)
     {
         if ($project->user_id !== auth()->id()) {
-            abort(403);
-        }
-    }
-
-    /**
-     * Authorize task access.
-     */
-    protected function authorizeTask(Task $task)
-    {
-        if ($task->project->user_id !== auth()->id()) {
             abort(403);
         }
     }

@@ -67,8 +67,9 @@ class ProjectController extends Controller
         $this->authorizeAccess($project);
 
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string|max:255',
+            'status' => 'sometimes|in:active,archived',
         ]);
 
         $project->update($validated);

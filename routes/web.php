@@ -16,5 +16,5 @@ Route::prefix('account')->name('account.')->middleware('auth')->group(function (
 
 Route::middleware('auth')->group(function () {
     Route::resource('projects', ProjectController::class);
-    Route::resource('projects.tasks', TaskController::class)->shallow();
+    Route::resource('projects.tasks', TaskController::class)->scoped();
 });
