@@ -14,9 +14,7 @@ Route::prefix('account')->name('account.')->middleware('auth')->group(function (
     Route::put('password-change', [UserController::class, 'passwordChange'])->name('password.change');
 });
 
-Route::prefix('projects')->name('projects.')->group(function () {
-    Route::resource('/', ProjectController::class)->middleware('auth');
-    Route::prefix('{project}')->group(function () {
-        Route::resource('tasks', TaskController::class)->shallow();
-    });
+Route::middleware('auth')->group(function () {
+    Route::resource('projects', ProjectController::class);
+    Route::resource('projects.tasks', TaskController::class)->shallow();
 });
