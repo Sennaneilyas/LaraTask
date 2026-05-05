@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
+
 
 class ChangePasswordRequest extends FormRequest
 {
@@ -37,9 +39,11 @@ class ChangePasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'new_password.required' => 'The new password is required',
+            'current_password.required' => 'Current password is required',
+            'new_password.required' => 'New password is required',
             'new_password.confirmed' => 'The password confirmation does not match.',
             'new_password.password' => 'Password must be at least 12 characters and include uppercase, lowercase, number, and symbol.'
-        ]
+        ];
     }
 }
+
