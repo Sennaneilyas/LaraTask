@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Task extends Model
 {
-    protected $fillable = ['title', 'description', 'project_id', 'is_completed'];
+    use HasFactory;
+
+    protected $fillable = ['title', 'description', 'project_id', 'priority', 'due_date', 'completed_at'];
 
     protected $casts = [
-        'is_completed' => 'boolean',
+        'due_date' => 'date',
+        'completed_at' => 'datetime',
     ];
 
     public function project(): BelongsTo
@@ -19,8 +23,8 @@ class Task extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function completed ($query): Builder
+    public function scopeCompleted($query): Builder
     {
-        return $query->whereNotNull('is_completed');
+        return $query->whereNotNull('completed_at');
     }
 }
