@@ -1,14 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-zinc-100 dark:bg-zinc-950 min-h-screen flex items-center justify-center p-6">
-    <div class="px-8 py-4 bg-white dark:bg-zinc-900 shadow-xl rounded-xl cursor-pointer hover:bg-brand hover:text-white transition-all duration-200 font-bold text-zinc-800 dark:text-zinc-200">
-        Tailwind v4 Simple Test
+<x-layout.app title="Welcome">
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="p-6 text-gray-900 text-center">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to LaraTask</h1>
+            <p class="text-gray-600 mb-8">Manage your projects and tasks easily and effectively.</p>
+            
+            @auth
+                <a href="{{ route('projects.index') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
+                    Go to Projects
+                </a>
+            @else
+                <div class="space-x-4">
+                    <a href="{{ route('login') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700">
+                        Login
+                    </a>
+                    <a href="{{ route('register') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700">
+                        Register
+                    </a>
+                </div>
+            @endauth
+        </div>
     </div>
-</body>
-</html>
+</x-layout.app>
