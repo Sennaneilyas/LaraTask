@@ -5,9 +5,9 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 
-
-class ChangePasswordRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,10 @@ class ChangePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => ['required'],
-            'new_password' => [
+            'email' => ['required', 'email', Rule::unique('users', 'email')],
+            'username' => ['required', Rule::unique('users', 'username')],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'password' => [
                 'required',
                 'confirmed',
                 Password::defaults()
@@ -36,17 +38,7 @@ class ChangePasswordRequest extends FormRequest
                     ->symbols()
                     ->uncompromised()
             ],
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'current_password.required' => 'Current password is required',
-            'new_password.required' => 'New password is required',
-            'new_password.confirmed' => 'The password confirmation does not match.',
-            'new_password.password' => 'Password must be at least 12 characters and include uppercase, lowercase, number, and symbol.'
+            'password_confirmation' => ['required']
         ];
     }
 }
-
