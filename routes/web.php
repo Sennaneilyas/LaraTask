@@ -24,12 +24,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/account/profile', [UserController::class, 'profile'])
         ->name('profile.show');
-
     Route::get('/account/password', [UserController::class, 'editPassword'])
         ->name('password.edit');
-    Route::put('/account/password', [UserController::class, 'updatePassword'])
+    Route::put('/account/password', [AuthController::class, 'changePassword'])
         ->name('password.update');
-
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 
