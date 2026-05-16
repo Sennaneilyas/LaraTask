@@ -1,7 +1,6 @@
-@extends('layouts.app', ['title' => 'Change Password'])
-@section('content')
+<x-layout.app title="Update Password">
     <div class="max-w-2xl mx-auto p-8">
-        <x-forms.auth-form :action="route('account.password')" method="PUT" title="Update Your Password"
+        <x-forms.auth-form :action="route('password.update')" method="PUT" title="Update Your Password"
             submit="Change Password">
             <x-slot name="fields">
                 <div class="space-y-4">
@@ -13,4 +12,4 @@
             </x-slot>
         </x-forms.auth-form>
     </div>
-@endsection
+</x-layout.app>

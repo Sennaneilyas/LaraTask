@@ -12,8 +12,9 @@ class UserController extends Controller
         return view('account.profile', compact('user'));
     }
 
-    public function passwordChange()
+    public function editPassword()
     {
-        return view('account.password-change');
+        return view('account.password-edit');
     }
+
 }

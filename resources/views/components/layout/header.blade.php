@@ -18,7 +18,7 @@
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-6">
             @auth
-                <a href="{{ route('dashboard') }}" class="text-gray-600 hover:text-blue-600 transition duration-300">Dashboard</a>
+                <a href="{{ route('projects.index') }}" class="text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
             @else
                 <a href="{{ route('login') }}" class="text-gray-600 hover:text-blue-600 transition duration-300">Login</a>
                 <a href="{{ route('register') }}" class="text-gray-600 hover:text-blue-600 transition duration-300">Register</a>
@@ -53,7 +53,7 @@
                     </button>
                     <div x-show="open" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
                         <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                        <a href="{{ route('password.reset') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Password</a>
+                        <a href="{{ route('password.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Password</a>
                         <form method="POST" action="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                             @csrf
                             <button type="submit" class="w-full text-left">Logout</button>
@@ -77,7 +77,7 @@
     <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-md shadow-sm border-b">
         <div class="container mx-auto px-4 py-3">
             @auth
-                <a href="{{ route('dashboard') }}" class="block py-2 text-gray-600 hover:text-blue-600 transition duration-300">Dashboard</a>
+                <a href="{{ route('projects.index') }}" class="block py-2 text-gray-600 hover:text-blue-600 transition duration-300">Projects</a>
                 <!-- User Avatar Dropdown for Mobile -->
                 <div class="relative mt-3" x-data="{ open: false }" @click.outside="open = false">
                     <button @click="open = ! open" class="flex items-center space-x-1 focus:outline-none w-full justify-between">
@@ -93,7 +93,7 @@
                     </button>
                     <div x-show="open" class="absolute left-0 mt-2 w-full bg-white rounded-md shadow-lg py-2 z-10">
                         <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-                        <a href="{{ route('password.reset') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Password</a>
+                        <a href="{{ route('password.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Password</a>
                         <form method="POST" action="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
                             @csrf
                             <button type="submit" class="w-full text-left">Logout</button>
