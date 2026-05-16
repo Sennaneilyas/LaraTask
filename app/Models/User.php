@@ -35,4 +35,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+
+    //Check if the user account is active.
+    public function isActive(): bool
+    {
+        return true;
+    }
 }
+

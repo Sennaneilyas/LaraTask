@@ -10,6 +10,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::view('/account/suspended', 'errors.suspended')->name('account-suspended');
+
+
 Route::middleware('guest')->group(function () {
     Route::view('/login', 'auth.login')->name('login');
     Route::post('/login', [AuthController::class, 'login']);
@@ -30,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout');
 
-    Route::resource('projects', ProjectController::class);
-    Route::resource('projects.tasks', TaskController::class)->scoped();
+    Route::middleware('isActive')->group(function () {
+        Route::resource('projects', ProjectController::class);
+        Route::resource('projects.tasks', TaskController::class)->scoped();
+    });
 });
