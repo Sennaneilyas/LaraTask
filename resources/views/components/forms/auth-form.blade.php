@@ -14,9 +14,12 @@
         @endif
     </div>
 
-    <form action="{{ $action }}" method="{{ $method }}" {{ $attributes->except(['class'])->merge(['class' => 'space-y-6']) }}>
+    <form action="{{ $action }}" method="{{ $method === 'GET' ? 'GET' : 'POST' }}" {{ $attributes->except(['class'])->merge(['class' => 'space-y-6']) }}>
         @csrf
-        @method($method)
+        @if(!in_array($method, ['GET', 'POST']))
+            @method($method)
+        @endif
+
 
         @if($errors->any())
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
