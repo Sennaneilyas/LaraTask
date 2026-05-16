@@ -4,11 +4,6 @@
             &larr; Back to Project
         </a>
 
-        @if (session('success'))
-            <div class="mb-6 p-4 bg-green-100 text-green-700 rounded-md">
-                {{ session('success') }}
-            </div>
-        @endif
 
         <div class="bg-white p-8 rounded-lg shadow-sm border border-gray-200">
             <div class="flex justify-between items-start mb-6">

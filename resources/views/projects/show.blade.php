@@ -31,11 +31,6 @@
         </div>
     </div>
 
-    @if (session('success'))
-        <div class="mb-6 p-4 bg-green-100 text-green-700 rounded-md">
-            {{ session('success') }}
-        </div>
-    @endif
 
     <!-- Tasks Section -->
     <div class="mt-10">

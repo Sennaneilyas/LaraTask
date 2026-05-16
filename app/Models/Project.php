@@ -13,10 +13,20 @@ class Project extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'slug', 'status'];
 
-    public function owner(): HasOne
+    public function owner(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($project) {
+            if (empty($project->slug)) {
+                $project->slug = \Illuminate\Support\Str::slug($project->title) . '-' . \Illuminate\Support\Str::random(5);
+            }
+        });
+    }
+
 
     public function tasks(): HasMany
     {

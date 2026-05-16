@@ -72,10 +72,16 @@ class TaskController extends Controller
             'is_completed' => 'sometimes|boolean',
         ]);
 
+        if (isset($validated['is_completed'])) {
+            $validated['completed_at'] = $validated['is_completed'] ? now() : null;
+            unset($validated['is_completed']);
+        }
+
         $task->update($validated);
 
-        return redirect()->route('projects.tasks.show', compact('project', 'task'))
+        return redirect()->route('projects.tasks.show', [$project, $task])
             ->with('success', 'Task updated successfully!');
+
     }
 
     /**
